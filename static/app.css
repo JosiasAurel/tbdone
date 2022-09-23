@@ -4,6 +4,13 @@
     font-family: sans-serif;
 }
 
+body {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 1em;
+}
+
 input[type="checkbox"] {
     transform: scale(2);
 }
+
