@@ -28,8 +28,8 @@ function randomID(length) {
     const pickup = "qwertzuiopasdfghjklyxcvbnm1234567890";
     let strId = "";
     for (let i = 0; i < length; i++) {
-        console.log(pickup.split().length);
-        const idx = Math.floor(Math.random()*pickup.split().length);
+        // console.log(pickup.split("").length);
+        const idx = Math.floor(Math.random()*pickup.split("").length);
         strId += pickup[idx];
     }
     return strId;
