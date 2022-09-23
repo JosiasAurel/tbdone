@@ -6,7 +6,9 @@ app = FastAPI()
 
 templates = Jinja2Templates("./ui")
 
-static_files = StaticFiles(directory="static")
+static_files = StaticFiles(directory="./static")
+
+app.mount("/static", static_files)
 
 @app.get("/")
 async def __root(res: Request):
