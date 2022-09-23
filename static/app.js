@@ -11,10 +11,11 @@ let progress = 0;
 let progressTicks = new Array(targetDays).fill(false);
 
 function fillProgressTicks() {
-    progressTicks.forEach(tick => {
+    const container = document.getElementById("ticks-counter");
+    progressTicks.forEach(_ => {
         const _tick = document.createElement("input");
         _tick.setAttribute("type", "checkbox");
-        document.body.appendChild(_tick);
+        container.appendChild(_tick);
     });
 }
 
