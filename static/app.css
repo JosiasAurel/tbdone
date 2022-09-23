@@ -3,3 +3,7 @@
     box-sizing: border-box;
     font-family: sans-serif;
 }
+
+input[type="checkbox"] {
+    transform: scale(2);
+}
