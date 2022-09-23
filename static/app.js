@@ -35,4 +35,11 @@ function randomID(length) {
     return strId;
 }
 
-console.log(randomID(5));
+function assignId() {
+    if (localStorage.getItem("id") === null) {
+        localStorage.setItem("id", randomID(7));
+    }
+}
+
+
+assignId();
