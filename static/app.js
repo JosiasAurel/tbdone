@@ -44,6 +44,16 @@ function setCompleted() {
 }
 }
 
+document.getElementById("change-goal").addEventListener("click", e => {
+    if (e.target.innerText === "New Goal") {
+        storeGoal(); 
+        clearGoalStore();
+    } else if (e.target.innerText === "Reset Goal") {
+        clearGoalStore();
+    } 
+    location.reload();
+});
+
 initMission();
 assignId();
 
@@ -105,3 +115,26 @@ function assignId() {
     }
 }
 
+function clearGoalStore() {
+    const items = ["mission", "start", "targetDays"];
+
+    items.forEach(item => localStorage.removeItem(item));
+}
+
+function storeGoal() {
+        const goals = JSON.parse(localStorage.getItem("goals"));
+        goals.push(loadGoal());
+        localStorage.setItem("goals", JSON.stringify(goals));
+    }
+
+function loadGoal() {
+        const name = localStorage.getItem("");
+        const targetStreak = progressTicks.length;
+        const actualStreak = progressTicks.filter(s => s === true).length;
+
+        return { name, targetStreak, actualStreak  };
+    }
+
+function loadGoals() {
+        return JSON.parse(localStorage.getItem("goals"));
+    }
