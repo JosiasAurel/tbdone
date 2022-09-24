@@ -19,19 +19,29 @@ function initMission() {
     localStorage.setItem("targetDays", targetDays);
 
     const goalContent = document.getElementById("goal-content");
-    goalContent.innerHTML = `Goal is ${goal} for ${targetDays} days.<br /> You are 50% into it!`;
-   
+    goalContent.innerHTML = `Goal is ${goal} for ${targetDays} days.<br /> You are 50% into it!`; 
+    
+    setCompleted();
+    progressTicks = loadProgressTicks(); 
+    // console.log(result);
     fillProgressTicks();
 }
 
 function setCompleted() {
+    let completed = localStorage.getItem("completed");
+
+    if (completed === "true") {
+
     const goalContent = document.getElementById("goal-content");
+    const changeGoal = document.getElementById("change-goal");
     const completedMsg = document.createElement("p");
     completedMsg.innerText = "COMPLETED";
     completedMsg.classList.add("completed");
 
-    let completed = localStorage.getItem("completed");
-    completed === "true" ? goalContent.appendChild(completedMsg) : void 0;
+        goalContent.appendChild(completedMsg); 
+        changeGoal.innerText = "New Goal";
+
+}
 }
 
 initMission();
@@ -43,9 +53,9 @@ function fillProgressTicks() {
         const _tick = document.createElement("input");
         _tick.setAttribute("type", "checkbox");
         state ?
-            _tick.setAttribute("checked", true)
+            _tick.checked = true
             :
-            _tick.removeAttribute("checked");
+            _tick.checked = false;
         container.appendChild(_tick);
         _tick.addEventListener("click", _e => {
             const tickDay = new Date(new Date().setDate(new Date().getDate() + i));
@@ -82,10 +92,12 @@ function randomID(length) {
 }
 
 // serialize and save progress ticks
-const updateProgressTicks = _ => localStorage.setItem("progress", progressTicks.join(""));
+const updateProgressTicks = _ => localStorage.setItem("progress", progressTicks.join("-"));
+
+function boolFromStringArray(arr) { return arr.map(item => item === "true" ? true : false) };
 
 // load and desrialize progress ticks
-const loadProgressTicks = _ => localStorage.getItem("progress").split("");
+function loadProgressTicks() { return boolFromStringArray(localStorage.getItem("progress").split("-")); };
 
 function assignId() {
     if (localStorage.getItem("id") === null) {
