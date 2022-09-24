@@ -3,36 +3,54 @@ let goal;
 let targetDays;
 let startDate;
 let daysIn;
-let progressTicks = new Array(targetDays).fill(false);
+let progressTicks;
 
 function initMission() {
     goal = prompt("Enter your target goal");
     targetDays = prompt("For how many days do you plan to do this");
     targetDays = parseInt(targetDays);
 
-    startDate = new Date().toUTCString();
-    startDate = new Date(startDate).getTime()
+    progressTicks = new Array(targetDays).fill(false);
+    
+    startDate = new Date().getTime();
 
     const goalContent = document.getElementById("goal-content");
     goalContent.innerHTML = `Goal is ${goal} for ${targetDays} days.<br /> You are 50% into it!`;
-
+    
+    fillProgressTicks();
 }
 
 initMission();
-fillProgressTicks();
 assignId();
-
-const childList = document.getElementById("ticks-counter").children;
-console.log(childList);
 
 function fillProgressTicks() {
     const container = document.getElementById("ticks-counter");
-    progressTicks.forEach(_ => {
+    progressTicks.forEach((state, i) => {
         const _tick = document.createElement("input");
         _tick.setAttribute("type", "checkbox");
+        state ?
+            _tick.setAttribute("checked", true)
+            :
+            _tick.removeAttribute("checked");
         container.appendChild(_tick);
+        _tick.addEventListener("click", _e => {
+            const tickDay = new Date(new Date().setDate(new Date().getDate() + i));
+            const today = new Date();
+            if (today.toString() == tickDay.toString()) { 
+                if (!progressTicks[i] && !_tick.getAttribute("disabled")) { 
+                    _tick.checked = true;
+                    progressTicks[i] = true;
+                    updateProgressTicks();
+                } else _tick.removeAttribute("checked");
+            } else {
+                _tick.checked = false;
+                alert("You can't check this today. Try again tomorrow.");
+            } 
+        });
     });
+
 }
+
 
 function randomID(length) {
     const pickup = "qwertzuiopasdfghjklyxcvbnm1234567890";
@@ -44,6 +62,8 @@ function randomID(length) {
     }
     return strId;
 }
+
+const updateProgressTicks = _ => localStorage.setItem("progress", progressTicks.join(""));
 
 function assignId() {
     if (localStorage.getItem("id") === null) {
