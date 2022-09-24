@@ -46,7 +46,7 @@ function setCompleted() {
 
 document.getElementById("change-goal").addEventListener("click", e => {
     if (e.target.innerText === "New Goal") {
-        storeGoal(); 
+        // storeGoal(); 
         clearGoalStore();
     } else if (e.target.innerText === "Reset Goal") {
         clearGoalStore();
@@ -79,6 +79,7 @@ function fillProgressTicks() {
                         localStorage.setItem("completed", true);
                         alert("Goal Completed. Well done!");
                         setCompleted();
+                        storeGoal();
                     }
                 } else _tick.removeAttribute("checked");
             } else {
