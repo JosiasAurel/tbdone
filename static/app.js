@@ -14,18 +14,24 @@ function initMission() {
     
     startDate = localStorage.getItem("start") ?? new Date().toString();
 
-    let completed = localStorage.getItem("completed");
-
     localStorage.setItem("start", startDate);
     localStorage.setItem("mission", goal);
     localStorage.setItem("targetDays", targetDays);
 
     const goalContent = document.getElementById("goal-content");
     goalContent.innerHTML = `Goal is ${goal} for ${targetDays} days.<br /> You are 50% into it!`;
+   
+    fillProgressTicks();
+}
+
+function setCompleted() {
+    const goalContent = document.getElementById("goal-content");
     const completedMsg = document.createElement("p");
     completedMsg.innerText = "COMPLETED";
     completedMsg.classList.add("completed");
-    fillProgressTicks();
+
+    let completed = localStorage.getItem("completed");
+    completed === "true" ? goalContent.appendChild(completedMsg) : void 0;
 }
 
 initMission();
@@ -51,7 +57,8 @@ function fillProgressTicks() {
                     updateProgressTicks();
                     if (typeof progressTicks[i+1] === "undefined") {
                         localStorage.setItem("completed", true);
-                        alert("Goal Completed");
+                        alert("Goal Completed. Well done!");
+                        setCompleted();
                     }
                 } else _tick.removeAttribute("checked");
             } else {
